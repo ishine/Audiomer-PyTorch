@@ -1,0 +1,12 @@
+einops == 0.3.0
+performer_pytorch
+pytorch_lightning
+tqdm
+joblib
+soundfile
+torchaudio_augmentations
+torchaudio
+audiomentations
+essentia
+h5py
+pandas

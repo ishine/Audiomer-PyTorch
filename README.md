@@ -10,7 +10,7 @@
   
 Audiomer: A Convolutional Transformer for Keyword Spotting
 
-| **[ [```ArXiV```](<https://arxiv.org/abs/2109.10252>) ]** | **[ [```Previous SOTA```](<https://github.com/ARM-software/keyword-transformer>) ]** |**[ [```Model Architecture```](<assets/Audiomer.jpeg>) ]** |
+| **[ [```arXiv```](<https://arxiv.org/abs/2109.10252>) ]** | **[ [```Previous SOTA```](<https://github.com/ARM-software/keyword-transformer>) ]** |**[ [```Model Architecture```](<assets/Audiomer.jpeg>) ]** |
 |:-------------------:|:-------------------:|:-------------------:|
 
 <br>

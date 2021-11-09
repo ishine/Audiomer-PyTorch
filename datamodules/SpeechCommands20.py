@@ -83,7 +83,7 @@ def collate_fn(batch, dataset, augmentation):
 
     # Gather in lists, and encode labels as indices
     for waveform, _, label, *_ in batch:
-        tensors += [t(waveform)]
+        tensors += [t(waveform).squeeze(1)]
         targets += [label_to_index(label)]
 
     # Group the list of tensors into a batched tensor

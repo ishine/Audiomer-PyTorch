@@ -32,8 +32,11 @@ class Experiment(pl.LightningModule):
             mlp_dropout=0.2,
             num_heads=2,
             depth=1,
-            use_residual=True,
             dim_head=32,
+            use_residual=kwargs['no_residual'],
+            use_attention=kwargs['no_attention'],
+            equal_strides=kwargs['unequal_strides'],
+            use_se=kwargs['no_se'],
         )
         self.activation_function = torch.nn.Identity()
 
@@ -160,6 +163,30 @@ class Experiment(pl.LightningModule):
             type=bool,
             default=False,
             help="Pin memory",
+        )
+        parser.add_argument(
+            "--no_se",
+            default=True,
+            action='store_false',
+            help="Whether to use squeeze excitation or not",
+        )
+        parser.add_argument(
+            "--unequal_strides",
+            default=False,
+            action='store_true',
+            help="Whether to use equal strides or not",
+        )
+        parser.add_argument(
+            "--no_attention",
+            default=True,
+            action='store_false',
+            help="Whether to use performer attention or not",
+        )
+        parser.add_argument(
+            "--no_residual",
+            default=True,
+            action='store_false',
+            help="Whether to use residual connections or not",
         )
         return parser
 

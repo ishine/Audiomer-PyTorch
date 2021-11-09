@@ -1,12 +1,9 @@
-einops
-performer_pytorch
-pytorch_lightning
-tqdm
-joblib
-soundfile
-torchaudio_augmentations
-torchaudio
-audiomentations
-essentia
-h5py
-pandas
+einops == 0.3.2
+numpy == 1.21.2
+performer_pytorch == 1.1.3
+pytorch_lightning == 1.5.0
+torch == 1.10.0
+torchaudio == 0.10.0
+torchaudio_augmentations == 0.2.2
+torchmetrics == 0.6.0
+torchsummary == 1.5.1

@@ -33,6 +33,7 @@ surgery_level_to_args = {
     2: " --no_se  --unequal_strides ",
     3: " --no_se  --unequal_strides  --no_residual ",
     4: " --no_se  --unequal_strides  --no_residual  --no_attention ",    
+    5: " --no_se  --no_attention ",    
 }
 
 def make_command_ablation(i, surgery_level):
@@ -47,7 +48,7 @@ def make_command_ablation(i, surgery_level):
     print(command)
     return command
 
-surgery_levels = [1, 2, 4] * 3
+surgery_levels = [1, 2, 3, 4, 5] * 3
 commands = [make_command_ablation(i, l) for i, l in enumerate(surgery_levels)]
 
 with mp.Pool(2 * NUM_GPUS) as p:

@@ -16,6 +16,8 @@ Audiomer: A Convolutional Transformer for Keyword Spotting
 <br>
 <samp>
 
+### NOTE: This is a pre-print release, the code might have bugs.
+  
 <h2> Results on SpeechCommands </h2>
 
 </samp> 

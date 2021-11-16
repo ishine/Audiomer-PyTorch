@@ -7,7 +7,7 @@ from argparse import ArgumentParser
 import numpy as np
 import torch.nn.functional as F
 import torch
-from Metrics import *
+import torchmetrics
 
 def single_label_cross_entropy(y_pred, y):
     return F.nll_loss(y_pred, y)
@@ -67,8 +67,9 @@ class Experiment(pl.LightningModule):
 
         self.model_params['mlp_dim'] = self.model_params['config'][-1]
         self.model = AudiomerClassification(**self.model_params)
-        self.metrics = SpeechCommandsMetrics(
-            self.model_params['num_classes'])
+        self.train_acc = torchmetrics.Accuracy(num_classes=self.model_params['num_classes'])
+        self.val_acc = torchmetrics.Accuracy(num_classes=self.model_params['num_classes'])
+        self.test_acc = torchmetrics.Accuracy(num_classes=self.model_params['num_classes'])
 
         # makes self.hparams under the hood and saves to ckpt
         for k, v in self.model_params.items():
@@ -84,51 +85,31 @@ class Experiment(pl.LightningModule):
         y_pred = self.activation_function(self(x))
         loss = self.loss_fn(y_pred, y)
 
-        m = self.metrics(y_pred, y, "train")
-        for metric_name, metric_value in m.items():
-            self.log(metric_name+"/train", metric_value, prog_bar=True)
+        self.train_acc(y_pred.argmax(-1), y)
+        self.log("ACC/train", self.train_acc, prog_bar=True)
         self.log("LOSS/train", loss)
 
         return loss
-
-    def training_epoch_end(self, *args, **kwargs):
-        self.metrics.reset("train")
 
     def validation_step(self, batch, batch_idx):
         x, y = batch
         y_pred = self.activation_function(self(x))
         loss = self.loss_fn(y_pred, y)
 
-        m = self.metrics(y_pred, y, "val")
+        self.val_acc(y_pred.argmax(-1), y)
+        self.log("ACC/val", self.val_acc, prog_bar=True)
         self.log("LOSS/val", loss, prog_bar=True)
-        m['LOSS'] = loss
-        return m
-
-    def validation_epoch_end(self, outs):
-        avg_loss = sum([item['LOSS'] for item in outs]) / len(outs)
-        m = outs[-1]
-        m['LOSS'] = avg_loss
-        for metric_name, metric_value in m.items():
-            self.log(metric_name+"/val", metric_value)
-        self.metrics.reset("val")
+        return loss
 
     def test_step(self, batch, batch_idx):
         x, y = batch
         y_pred = self.activation_function(self(x))
         loss = self.loss_fn(y_pred, y)
 
-        m = self.metrics(y_pred, y, "test")
-        m['LOSS'] = loss
-        return m
-
-    def test_epoch_end(self, outs):
-        avg_loss = sum([item['LOSS'] for item in outs]) / len(outs)
-        m = outs[-1]
-        m['LOSS'] = avg_loss
-        for metric_name, metric_value in m.items():
-            self.log(metric_name+"/test", metric_value)
-        self.metrics.reset("test")
-        return m
+        self.test_acc(y_pred.argmax(-1), y)
+        self.log("ACC/test", self.test_acc, prog_bar=True)
+        self.log("LOSS/test", loss, prog_bar=True)
+        return loss
 
     def configure_optimizers(self):
         lr = self.hparams.learning_rate
@@ -231,7 +212,6 @@ def cli_main(args=None):
         logger=logger,
         callbacks=[checkpointer]
     )
-    model.metrics.to("cuda")
     trainer.fit(model, dm) # dont test when training
 
 

@@ -39,6 +39,7 @@ labels = ['_silence_',
           'stop',
           'go']
 
+to_unknown = ["bed", "bird", "cat", "dog", "happy", "house", "marvin", "sheila", "tree", "wow",'visual','zero', 'one','two', 'three', 'four', 'five', 'six','seven','eight', 'nine']
 # labels = ['backward', 'bed', 'bird', 'cat', 'dog', 'down', 'eight', 'five', 'follow', 'forward', 'four', 'go', 'happy', 'house', 'learn', 'left',
 #           'marvin', 'nine', 'no', 'off', 'on', 'one', 'right', 'seven', 'sheila', 'six', 'stop', 'three', 'tree', 'two', 'up', 'visual', 'wow', 'yes', 'zero']
 
@@ -73,7 +74,12 @@ test_transform = ComposeMany(
 
 def label_to_index(word):
     # Return the position of the word in labels
-    return torch.tensor(labels.index(word))
+    if word in labels:
+        return torch.tensor(labels.index(word))
+    # Unknown
+    elif word in to_unknown:
+        return torch.tensor(labels.index('_unknown_'))
+
 
 
 def index_to_label(index):
@@ -136,7 +142,8 @@ class SpeechCommands12(torch.utils.data.Dataset):
         self.ds = SubsetSC(subset=subset, root=root)
         self.indices = []
         for i in range(len(self.ds)):
-            if self.ds[i][2] in labels:
+            l = self.ds[i][2]
+            if l in labels or l in to_unknown:
                 self.indices.append(i)
 
     def __len__(self):
@@ -170,5 +177,5 @@ class SpeechCommands12DataModule(pl.LightningDataModule):
 
 if __name__ == "__main__":
     ds = SpeechCommands12(
-        "testing", "./")
+        "testing", "../")
     print(ds[0])

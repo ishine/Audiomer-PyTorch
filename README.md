@@ -16,9 +16,8 @@ Audiomer: A Convolutional Transformer for Keyword Spotting
 <br>
 <samp>
 
+### Pretrained Models https://drive.google.com/drive/folders/1yw2Rc84e6xgBteMYPIL1ny9XELnve3FX?usp=sharing
 ### NOTE: This is a pre-print release, the code might have bugs.
-#### Pretrained Models
-Shared Google Drive Folder: https://drive.google.com/drive/folders/1yw2Rc84e6xgBteMYPIL1ny9XELnve3FX?usp=sharing
   
 <h2> Results on SpeechCommands </h2>
 

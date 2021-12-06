@@ -9,7 +9,9 @@
 </samp>
   
 Audiomer: A Convolutional Transformer for Keyword Spotting
-
+<br>
+Accepted at AAAI 2022 DSTC Workshop 
+  
 | **[ [```arXiv```](<https://arxiv.org/abs/2109.10252>) ]** | **[ [```Previous SOTA```](<https://github.com/ARM-software/keyword-transformer>) ]** |**[ [```Model Architecture```](<assets/Audiomer.jpeg>) ]** |
 |:-------------------:|:-------------------:|:-------------------:|
 

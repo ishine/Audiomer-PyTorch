@@ -33,7 +33,7 @@ Accepted at AAAI 2022 DSTC Workshop
 
 </samp> 
   
-<img src="assets/Audiomer.jpeg">
+<img src="assets/Audiomer.png">
 
 <samp>
 
@@ -41,7 +41,7 @@ Accepted at AAAI 2022 DSTC Workshop
 
 </samp>   
   
-<img src="assets/ConvAttention.jpeg">
+<img src="assets/ConvAttention.png">
 
 ---  
   

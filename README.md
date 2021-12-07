@@ -20,40 +20,26 @@ Accepted at AAAI 2022 DSTC Workshop
 
 ### Pretrained Models: [Google Drive](<https://drive.google.com/drive/folders/1yw2Rc84e6xgBteMYPIL1ny9XELnve3FX?usp=sharing>)
 ### NOTE: This is a pre-print release, the code might have bugs.
-  
-<h2> Results on SpeechCommands </h2>
-
-</samp> 
-
-<img src="assets/results.png">
-
-<samp>
-
-<h2> Model Architecture </h2>
-
-</samp> 
-  
-<img src="assets/Audiomer.png">
-
-<samp>
-
-<h2> Performer Conv-Attention </h2>
-
-</samp>   
-  
-<img src="assets/ConvAttention.png">
-
----  
-  
-</div>
 
 ## Usage
-  To reproduce the results in the paper, follow the instructions:
+To reproduce the results in the paper, follow the instructions:
 
 - To download the Speech Commands v2 dataset, run: `python3 datamodules/SpeechCommands12.py`
 - To train Audiomer-S and Audiomer-L on all three datasets thrice, run: `python3 run_expts.py`
 - To evaluate a model on a dataset, run: `python3 evaluate.py --checkpoint_path /path/to/checkpoint.ckpt --model <model type> --dataset <name of dataset>`.
 - For example: `python3 evaluate.py --checkpoint_path ./epoch=300.ckpt --model S --dataset SC20`
+
+## Results 
+<img src="assets/results.png">
+
+## Performer Conv-Attention
+TLDR: We augment 1D ResNets With Performer Attention over Raw Audio waveform. 
+
+<img src="assets/ConvAttention.png">
+
+---  
+  
+</div>
 
 ## System requirements
 - NVIDIA GPU with CUDA

@@ -17,7 +17,8 @@ Accepted at AAAI 2022 DSTC Workshop
 
 <br>
 <samp>
-
+</div>
+  
 ### Pretrained Models: [Google Drive](<https://drive.google.com/drive/folders/1yw2Rc84e6xgBteMYPIL1ny9XELnve3FX?usp=sharing>)
 ### NOTE: This is a pre-print release, the code might have bugs.
 
@@ -28,6 +29,8 @@ To reproduce the results in the paper, follow the instructions:
 - To train Audiomer-S and Audiomer-L on all three datasets thrice, run: `python3 run_expts.py`
 - To evaluate a model on a dataset, run: `python3 evaluate.py --checkpoint_path /path/to/checkpoint.ckpt --model <model type> --dataset <name of dataset>`.
 - For example: `python3 evaluate.py --checkpoint_path ./epoch=300.ckpt --model S --dataset SC20`
+
+<div align="center">
 
 ## Results 
 <img src="assets/results.png">

@@ -125,7 +125,7 @@ class Experiment(pl.LightningModule):
     def add_model_specific_args(parent_parser):
         parser = ArgumentParser(parents=[parent_parser], add_help=False)
         parser.add_argument(
-            "--learning_rate", type=float, default=0.005, help="adam: learning rate"
+            "--learning_rate", type=float, default=2e-3, help="adam: learning rate"
         )
         parser.add_argument(
             "--batch_size",

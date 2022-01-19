@@ -4,7 +4,7 @@
 <samp>
 
 
-# ☢️ Audiomer ☢️ 
+# Audiomer 
 
 </samp>
   
@@ -22,7 +22,6 @@ Accepted at AAAI 2022 DSTC Workshop
 </div>
   
 ### Pretrained Models: [Google Drive](<https://drive.google.com/drive/folders/1yw2Rc84e6xgBteMYPIL1ny9XELnve3FX?usp=sharing>)
-### NOTE: This is a pre-print release, the code might have bugs.
 
 ## Usage
 To reproduce the results in the paper, follow the instructions:

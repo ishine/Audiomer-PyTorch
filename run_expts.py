@@ -1,4 +1,3 @@
-from math import prod
 import multiprocessing as mp
 import os
 from itertools import product

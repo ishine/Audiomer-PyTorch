@@ -26,7 +26,7 @@ Accepted at AAAI 2022 DSTC Workshop
 ## Usage
 To reproduce the results in the paper, follow the instructions:
 
-- To download the Speech Commands v2 dataset, run: `python3 datamodules/SpeechCommands12.py`
+- To download the Speech Commands v2 dataset, run: `python3 download_speechcommands.py`
 - To train Audiomer-S and Audiomer-L on all three datasets thrice, run: `python3 run_expts.py`
 - To evaluate a model on a dataset, run: `python3 evaluate.py --checkpoint_path /path/to/checkpoint.ckpt --model <model type> --dataset <name of dataset>`.
 - For example: `python3 evaluate.py --checkpoint_path ./epoch=300.ckpt --model S --dataset SC20`

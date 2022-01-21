@@ -196,10 +196,18 @@ def cli_main(args=None):
         action='store_false',
         help="Whether to use residual connections or not",
     )
+    parser.add_argument(
+        "--cuda",
+        default=True,
+        action='store_true',
+        help="Whether to use CUDA or not",
+    )
     args, _ = parser.parse_known_args(args)
 
     model = Experiment(**vars(args))
-    model.load_state_dict(torch.load(script_args.checkpoint_path)['state_dict'])
+    device = 'cuda' if args.cuda else 'cpu'
+    model.to(device)
+    model.load_state_dict(torch.load(script_args.checkpoint_path, map_location=device)['state_dict'])
 
     dm = dm_cls(batch_size=args.batch_size, num_workers=args.num_workers,
                 pin_memory=args.pin_memory, augmentation=True)

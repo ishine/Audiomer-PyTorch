@@ -98,8 +98,7 @@ class AudiomerEncoderBlock(nn.Module):
         q, context = self.conv(x)
         # (b, num_frames, out_channels) -> (b, num_frames, out_channels)
         if self.use_attention:
-            out = q + self.performer(q, context=context,
-                                    context_mask=torch.ones_like(context).bool())
+            out = q + self.performer(q, context=context)
         else:
             out = q            
         # (b, num_frames, out_channels) -> (b, out_channels, num_frames)
@@ -256,12 +255,15 @@ if __name__ == "__main__":
         mlp_dropout=0.2,
         use_residual=True,
         dim_head=32,
-        expansion_factor=2
-    ).cuda()
+        expansion_factor=2,
+        use_attention=True,
+        use_se=True,
+        equal_strides=False
+    )
 
-    inp = torch.randn(2, 1,  input_size).cuda()
+    inp = torch.randn(2, 1,  input_size)
     block(inp)
-    summary(block, (1, input_size), device='cuda')
+    summary(block, (1, input_size), device='cpu')
     count = 0
     for p in block.parameters():
         count += int(p.numel())

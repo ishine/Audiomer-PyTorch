@@ -89,7 +89,8 @@ class AudiomerEncoderBlock(nn.Module):
                 ff_glu=True,
                 attn_dropout=0.2,
                 use_scalenorm=True,
-                ff_mult=expansion_factor
+                ff_mult=expansion_factor,
+                cross_attend=True
             )
 
     def forward(self, x):

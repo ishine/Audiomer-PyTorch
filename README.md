@@ -21,7 +21,10 @@ Accepted at AAAI 2022 DSTC Workshop
 <samp>
 </div>
   
-### Pretrained Models: [Google Drive](<https://drive.google.com/drive/folders/1yw2Rc84e6xgBteMYPIL1ny9XELnve3FX?usp=sharing>)
+### Pretrained Models
+  Links: [Google Drive](<https://drive.google.com/drive/folders/1yw2Rc84e6xgBteMYPIL1ny9XELnve3FX?usp=sharing>)
+  Note: `The pretrained models only work with commit 6270ca27de47fbfd0379c172bbc74e6a61f72176`, after which there has been breaking changes.
+
 
 ## Usage
 To reproduce the results in the paper, follow the instructions:

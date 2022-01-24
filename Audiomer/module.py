@@ -1,7 +1,8 @@
-from performer_pytorch import Performer
-from performer_pytorch.performer_pytorch import FixedPositionalEmbedding
-import torch
+from performer_pytorch.performer_pytorch import FeedForward, PreScaleNorm
+from performer_pytorch import CrossAttention as PerformerCrossAttention
+from sklearn.preprocessing import scale
 from torch import nn
+import torch
 import torch.nn.functional as F
 from einops import rearrange, repeat
 try:
@@ -51,6 +52,16 @@ class ConvEmbedding(nn.Module):
         context = to_channels_last(context)
         return q, context
 
+class AttentionBlock(nn.Module):
+    def __init__(self, attn, ff, dim):
+        super().__init__()
+        self.attn = PreScaleNorm(dim, attn)
+        self.ff = PreScaleNorm(dim, ff)
+            
+    def forward(self, x, context):
+        out = self.attn(x, context=context)
+        out = self.ff(out)
+        return out
 
 class AudiomerEncoderBlock(nn.Module):
     def __init__(
@@ -81,16 +92,21 @@ class AudiomerEncoderBlock(nn.Module):
             equal_strides=equal_strides
         )
         if self.use_attention:
-            self.performer = Performer(
+            attn = PerformerCrossAttention(
                 dim=out_channels,
-                depth=depth,
+                causal=False,
                 heads=num_heads,
                 dim_head=dim_head,
-                ff_glu=True,
-                attn_dropout=0.2,
-                use_scalenorm=True,
-                ff_mult=expansion_factor,
-                cross_attend=True
+                dropout=0.2
+            )
+            ff = FeedForward(
+                out_channels, 
+                mult=expansion_factor, 
+                glu=True
+            )
+            self.performer = nn.ModuleList([
+                AttentionBlock(attn, ff, dim=out_channels)
+            ] * depth
             )
 
     def forward(self, x):
@@ -98,7 +114,9 @@ class AudiomerEncoderBlock(nn.Module):
         q, context = self.conv(x)
         # (b, num_frames, out_channels) -> (b, num_frames, out_channels)
         if self.use_attention:
-            out = q + self.performer(q, context=context)
+            out = q
+            for l in self.performer:
+                out = out + l(q, context=context)
         else:
             out = q            
         # (b, num_frames, out_channels) -> (b, out_channels, num_frames)
